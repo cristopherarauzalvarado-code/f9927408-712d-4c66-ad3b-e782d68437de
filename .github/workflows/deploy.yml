@@ -1,0 +1,81 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - ".github/CODEOWNERS"
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - ".github/CODEOWNERS"
+
+jobs:
+  build-backend:
+    name: Build Backend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/backend
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v6.0.3
+
+      - uses: actions/setup-node@v6.4.0
+        with:
+          node-version: "22"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@craiahq"
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+  build-storefront:
+    name: Build Storefront
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/storefront
+    env:
+      # Stub values so next build passes env checks — not used at runtime
+      NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: pk_ci_stub
+      NEXT_PUBLIC_MEDUSA_BACKEND_URL: http://localhost:9000
+      NEXT_PUBLIC_DEFAULT_REGION: cr
+
+    steps:
+      - uses: actions/checkout@v6.0.3
+
+      - uses: actions/setup-node@v6.4.0
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - name: Cache Next.js build
+        uses: actions/cache@v5.0.5
+        with:
+          path: apps/storefront/.next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('apps/storefront/package-lock.json', 'package-lock.json') }}-${{ hashFiles('apps/storefront/**/*.ts', 'apps/storefront/**/*.tsx') }}
+          restore-keys: |
+            nextjs-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+# Railway deploys automatically on push to main via GitHub integration.
+# The release command (medusa db:migrate) runs inside Railway, not here.
+# CI only validates that both apps build successfully.

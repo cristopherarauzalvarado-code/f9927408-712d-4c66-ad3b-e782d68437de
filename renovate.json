@@ -1,0 +1,48 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePrefixes": ["@craia/"],
+      "groupName": "CRAIA shared packages",
+      "automerge": true,
+      "automergeType": "pr",
+      "matchUpdateTypes": ["patch"],
+      "minimumReleaseAge": "0 days"
+    },
+    {
+      "matchPackagePrefixes": ["@craia/"],
+      "matchUpdateTypes": ["minor"],
+      "automerge": false,
+      "labels": ["dependencies", "craia-update"],
+      "reviewers": ["CRAIAHQ/backend-team"]
+    },
+    {
+      "matchPackagePrefixes": ["@craia/"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "breaking-change"],
+      "reviewers": ["CRAIAHQ/backend-team"]
+    },
+    {
+      "matchPackagePrefixes": ["@medusajs/"],
+      "groupName": "Medusa core",
+      "automerge": false,
+      "labels": ["dependencies", "medusa-upgrade"],
+      "reviewers": ["CRAIAHQ/backend-team"],
+      "schedule": ["before 9am on Monday"]
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true,
+      "matchUpdateTypes": ["patch", "minor"]
+    }
+  ],
+  "schedule": ["after 10pm every weekday", "every weekend"],
+  "timezone": "America/Costa_Rica",
+  "labels": ["dependencies"],
+  "prConcurrentLimit": 3,
+  "prHourlyLimit": 2
+}

@@ -1,0 +1,97 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f7f8fa;
+  --surface: #f2f4f6;
+  --line: #e4e6e8;
+  --accent: #fefa17; /* amarillo Figma */
+  --ink: #000000;
+  --ink-muted: #737373;
+  --ink-faint: #9ca3af;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--ink);
+}
+
+/* Scrollbar tono claro */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-soft);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-faint);
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer components {
+  .content-container {
+    @apply max-w-[1280px] w-full mx-auto px-5 small:px-8;
+  }
+
+  /* Botón primario oscuro (Figma: "Search", "View More") */
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 font-sans font-bold text-white transition-colors duration-200 hover:bg-ink/85;
+  }
+
+  /* Botón amarillo de acento (Figma: CTA destacada) */
+  .btn-lime {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-lime px-6 py-3 font-sans font-bold text-ink transition-colors duration-200 hover:bg-lime-bright;
+  }
+
+  /* Botón suave gris (Figma: "Book Now") */
+  .btn-soft {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-jungle-line bg-[#F2F4F6] px-5 py-2.5 font-sans font-bold text-ink transition-colors duration-200 hover:bg-jungle-line;
+  }
+
+  /* Botón contorno claro */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-jungle-line bg-white px-6 py-3 font-sans font-semibold text-ink transition-colors duration-200 hover:border-ink;
+  }
+
+  /* Etiqueta tipo "eyebrow" (kicker) */
+  .eyebrow {
+    @apply font-sans text-xs font-bold uppercase tracking-[0.18em] text-sand;
+  }
+
+  /* Píldora de acento amarilla (Figma: "Discovery the World") */
+  .badge-accent {
+    @apply inline-flex items-center rounded-full bg-lime px-5 py-2.5 font-sans text-sm font-bold text-ink;
+  }
+
+  /* Tarjeta blanca estándar de Figma */
+  .card {
+    @apply rounded-2xl border border-jungle-line bg-white;
+  }
+}
