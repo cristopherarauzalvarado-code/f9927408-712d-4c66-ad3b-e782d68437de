@@ -2,5 +2,20 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "installCommand": "npm install --no-workspaces",
-  "buildCommand": "npm run build"
+  "buildCommand": "npm run build",
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY": "pk_79e255d17d40a7affd41096e683621d3c27b8a50b9594e11808ff763f858091e",
+      "NEXT_PUBLIC_MEDUSA_BACKEND_URL": "http://localhost:9000",
+      "NEXT_PUBLIC_DEFAULT_REGION": "cr",
+      "NEXT_PUBLIC_STORE_NAME": "Costarican Adventures",
+      "NEXT_PUBLIC_STORE_DESCRIPTION": "Tours, buceo y villas en Costa Rica desde 2007. Transporte, guía y comida incluidos, con salida desde San José.",
+      "NEXT_PUBLIC_BRAND_PRIMARY": "#7CB518",
+      "NEXT_PUBLIC_BRAND_PRIMARY_FG": "#121212",
+      "NEXT_PUBLIC_SUPPORT_EMAIL": "amigos@costarican-adventures.com",
+      "NEXT_PUBLIC_SUPPORT_PHONE": "+506 8680-8236",
+      "NEXT_PUBLIC_SUPPORT_WHATSAPP": "50686808236",
+      "NEXT_PUBLIC_ONVO_PUBLISHABLE_KEY": "onvo_test_publishable_key_Iiok5HmFN5cMYNjwFGivouDFnkP8bvxgy2qvbdiG-_HVd3k4h3Sx9BV62osvsIxKKqRgdePhHt1DJzoEHsYCAQ"
+    }
+  }
 }
